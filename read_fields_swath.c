@@ -4,6 +4,30 @@
  *  Created on: Feb 25, 2019
  *      Author: mrilee
  *
+ *
+ *      2019-0225 What a bloody pain. HDF5 & HDF-EOS5 are picky in mutual compatibility.
+ *
+ *      Found a working combination by looking at HDF-EOS's docker file. To wit:
+ *
+ *
+#Build HDF5
+RUN wget https://observer.gsfc.nasa.gov/ftp/edhs/hdfeos5/latest_release/hdf5-1.8.19.tar.gz; \
+    tar zxvf hdf5-1.8.19.tar.gz; \
+    cd hdf5-1.8.19; \
+    ./configure --prefix=/usr/local/; \
+    make && make install; \
+    cd ..; \
+    rm -rf /hd5f-1.8.19 /hdf5-1.8.19.tar.gz
+
+#Build HDF-EOS5
+RUN wget https://observer.gsfc.nasa.gov/ftp/edhs/hdfeos5/latest_release/HDF-EOS5.1.16.tar.Z; \
+    tar zxvf HDF-EOS5.1.16.tar.Z; \
+    cd hdfeos5; \
+    ./configure --prefix=/usr/local/ --enable-install-include --with-hdf5=/usr/local; \
+    make && make install; \
+    cd ..; \
+    rm -rf /hdfeos5 /HDF-EOS5.1.16.tar.Z
+ *
  *  Copyright (C) 2019 Rilee Systems Technologies LLC
  */
 
@@ -83,7 +107,7 @@ int main(int argc, char **argv)
 		return -1;
 	}
 	printf("130\n");
-	if(true) {
+	if(1) {
 	/* Read data from 'AerosolIndexUV' */
 	if ((HE5_SWreadfield(swath1, "AerosolIndexUV", NULL, NULL, NULL, datafield1data)) == -1) {
 		fprintf(stderr, "error: cannot read field 'AerosolIndexUV'\n");

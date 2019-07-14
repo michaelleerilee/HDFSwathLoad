@@ -35,4 +35,7 @@ add_executable(             read_fields_swath "read_fields_swath.c" )
 target_include_directories( read_fields_swath PUBLIC $ENV{HDFEOS5_INC} /usr/local/hdf5/include )
 target_link_libraries(      read_fields_swath ${HDF5_EOS_LIBRARIES} /usr/local/hdf5/lib/libhdf5_hl.a ${HDF5_C_LIBRARIES} ) 
 
-
+add_executable(             SwathSTARE_VDS "SwathSTARE_VDS.cpp" )
+target_include_directories( SwathSTARE_VDS PUBLIC $ENV{HDFEOS5_INC} /usr/local/hdf5/include /home/mrilee/workspace/STARE-CMAKE/include/ /usr/include )
+target_link_libraries(      SwathSTARE_VDS ${HDF5_EOS_LIBRARIES} /usr/local/hdf5/lib/libhdf5_hl.a /usr/local/hdf5/lib/libhdf5_cpp.a ${HDF5_C_LIBRARIES} /home/mrilee/workspace/STARE-CMAKE/build/default/src/libSTARE.a /usr/lib64/liberfa.so )
+ 
